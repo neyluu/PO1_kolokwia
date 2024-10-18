@@ -104,7 +104,7 @@ char *my_strncpy(char *destination, const char *source, size_t num)
 }
 char *my_strdup(const char *str1)
 {
-    char *out = malloc(my_strlen(str1));
+    char *out = (char*)malloc(my_strlen(str1) + 1);
     if(out == NULL) return NULL;
 
     size_t i;
@@ -234,14 +234,14 @@ int main()
 
     printf("==== STRING.H ====\n");
     printf("--strlen--\n");
-    printf("%llu %llu %llu\n",
+    printf("%lu %lu %lu\n",
            my_strlen("ala"),
            my_strlen("Ala ma kota a kot biega."),
            my_strlen("")
            );
 
     printf("--strcat--\n");
-    char str1[32] = {};
+    char str1[32] = {0};
     my_strcat(str1, "ala ");
     my_strcat(str1, "ma ");
     my_strcat(str1, "kota.");
