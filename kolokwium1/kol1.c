@@ -30,11 +30,12 @@ char *my_strcat(char *destination, const char *source)
 char *my_strncat(char *destination, const char *source, size_t num)
 {
     size_t len_destination = my_strlen(destination);
+    size_t len_source = my_strlen(source);
 
     int j = 0;
     size_t i;
 
-    for(i = len_destination; i < len_destination + num; i++)
+    for(i = len_destination; (i < len_destination + num) && j < len_source; i++)
     {
         destination[i] = source[j++];
     }
@@ -98,7 +99,7 @@ char *my_strncpy(char *destination, const char *source, size_t num)
         else destination[i] = source[i];
     }
 
-    destination[i] = '\0';
+    if(my_strlen(source) <= num) destination[i] = '\0';
 
     return destination;
 }
@@ -128,9 +129,9 @@ char *my_strchr(const char *str, int character)
 }
 char *my_strrchr(const char *str, int character)
 {
-    size_t i = my_strlen(str) - 1;
+    int i = (int) my_strlen(str) - 1;
 
-    while(i > 0)
+    while(i >= 0)
     {
         if(str[i] == character) return (char*)str + i;
         i--;
@@ -254,7 +255,7 @@ int main()
     my_strncat(str2, "ma", 2);
     my_strncat(str2, "", 4);
     my_strncat(str2, " lorem ipsum lorem ipsum", 10);
-    printf("%s\n", str2);
+    printf("'%s'\n", str2);
 
     printf("--strcmp--\n");
     printf("%d %d %d\n",
@@ -308,9 +309,9 @@ int main()
     printf("%s\n%s\n%s\n",
            my_strrchr("ala ma kota", 't'),
            my_strrchr("kajak", 'a'),
-           my_strchr("woda", 'w')
+           my_strrchr("woda", 'w')
            );
 
-    char *str8 = my_strchr("woda", 'z');
+    char *str8 = my_strrchr("woda", 'z');
     if(str8 == NULL) printf("Letter not found\n");
 }
